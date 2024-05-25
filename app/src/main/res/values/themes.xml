@@ -3,7 +3,12 @@
     <style name="Base.Theme.MOB2041_PH28509" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:forceDarkAllowed" tools:targetApi="q">true</item>
     </style>
 
-    <style name="Theme.MOB2041_PH28509" parent="Base.Theme.MOB2041_PH28509" />
+    <style name="Theme.MOB2041_PH28509" parent="Base.Theme.MOB2041_PH28509">
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
 </resources>
