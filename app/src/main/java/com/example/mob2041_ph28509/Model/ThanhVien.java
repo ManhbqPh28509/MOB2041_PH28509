@@ -7,7 +7,7 @@ public class ThanhVien {
     private int sdt;
     private LocalDate ngaysinh;
 
-    public static final String TB_NAME = "TB_Thanh_Vien";
+    public static final String TB_NAME = "Thanh_Vien";
     public static final String COL_Ma_TV = "ma_thanh_vien";
     public static final String COL_HoTen = "hoten";
     public static final String COL_DiaChi = "diachi";

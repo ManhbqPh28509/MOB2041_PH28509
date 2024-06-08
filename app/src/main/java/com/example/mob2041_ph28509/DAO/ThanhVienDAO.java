@@ -27,6 +27,7 @@ public class ThanhVienDAO {
         contentValues.put(ThanhVien.COL_NgaySinh, String.valueOf(thanhVien.getNgaysinh()));
         contentValues.put(ThanhVien.COL_Email,thanhVien.getEmail());
         contentValues.put(ThanhVien.COL_SDT,thanhVien.getSdt());
+        contentValues.put(ThanhVien.COL_DiaChi,thanhVien.getDiachi());
         contentValues.put(ThanhVien.COL_MatKhau,thanhVien.getMatkhau());
         long res = db.insert(ThanhVien.TB_NAME,null,contentValues);
         return res;
@@ -44,6 +45,12 @@ public class ThanhVienDAO {
 
         cursor.close();
         return newMaThanhVien;
+    }
+    public boolean checkLoginThanhVien(String email, String matKhau) {
+        String query = "SELECT * FROM Thanh_Vien WHERE email = ? AND matkhau = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{email, matKhau});
+        boolean result = cursor.getCount() > 0;
+        return result;
     }
 
     public ArrayList<ThanhVien> selectAll() {
@@ -63,7 +70,8 @@ public class ThanhVienDAO {
                 }
                 thanhVien.setEmail(cursor.getString(3));
                 thanhVien.setSdt(cursor.getInt(4));
-                thanhVien.setMatkhau(cursor.getString(5));
+                thanhVien.setDiachi(cursor.getString(5));
+                thanhVien.setMatkhau(cursor.getString(6));
                 arrayList.add(thanhVien);
                 cursor.moveToNext();
             }
@@ -74,5 +82,23 @@ public class ThanhVienDAO {
         cursor.close();
 
         return arrayList;
+    }
+    public String getLoaiNguoiDung(String email, String matKhau) {
+        String queryThanhVien = "SELECT * FROM Thanh_Vien WHERE email = ? AND mat_khau = ?";
+        String queryThuThu = "SELECT * FROM Thu_Thu WHERE email = ? AND mat_khau = ?";
+
+        Cursor cursorThanhVien = db.rawQuery(queryThanhVien, new String[]{email, matKhau});
+        if (cursorThanhVien.moveToFirst()) {
+            cursorThanhVien.close();
+            return "thanh_vien";
+        }
+
+        Cursor cursorThuThu = db.rawQuery(queryThuThu, new String[]{email, matKhau});
+        if (cursorThuThu.moveToFirst()) {
+            cursorThuThu.close();
+            return "thu_thu";
+        }
+
+        return ""; // Không tìm thấy người dùng
     }
 }
